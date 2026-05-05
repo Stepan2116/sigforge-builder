@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SigForge — Multi-Strategy Validation Framework</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="SigForge: open-source multi-strategy validation framework for Polymarket. Original strategies, disciplined methodology, infrastructure-first approach.">
+<style>
+:root {
+  --matrix: #00ff41;
+  --matrix-dim: #006622;
+  --matrix-glow: #00ff88;
+  --cyan: #00ffee;
+  --amber: #ffb000;
+  --red: #ff0055;
+  --bg: #000000;
+  --bg-cell: rgba(0, 10, 2, 0.85);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--matrix);
+  font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+  min-height: 100vh;
+}
+.scanlines {
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  background: repeating-linear-gradient(0deg, transparent 0 2px,
+    rgba(0, 255, 65, 0.025) 3px, transparent 4px);
+}
+.vignette {
+  position: fixed; inset: 0; pointer-events: none; z-index: 998;
+  background: radial-gradient(ellipse at center, transparent 30%,
+    rgba(0, 0, 0, 0.6) 85%, rgba(0, 0, 0, 0.9) 100%);
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 28px 24px 60px; position: relative; z-index: 10; }
+
+/* Header */
+.brand {
+  display: flex; align-items: center; gap: 18px; padding: 12px 0 30px;
+  border-bottom: 1px solid var(--matrix-dim);
+}
+.brand .logo {
+  font-size: 28px; letter-spacing: 6px; font-weight: 700;
+  color: var(--matrix-glow); text-shadow: 0 0 12px var(--matrix);
+}
+.brand .pulse {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--matrix); box-shadow: 0 0 12px var(--matrix);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.brand .tag {
+  font-size: 11px; letter-spacing: 3px; color: var(--matrix-dim);
+}
+
+/* Hero */
+.hero {
+  padding: 36px 0 28px; text-align: center;
+}
+.hero h1 {
+  font-size: 26px; letter-spacing: 2px; color: var(--matrix-glow);
+  text-shadow: 0 0 8px var(--matrix); margin-bottom: 14px;
+  font-family: -apple-system, 'SF Pro', sans-serif; font-weight: 700;
+}
+.hero p {
+  font-size: 14px; color: #c0ffd0; max-width: 700px; margin: 0 auto;
+  font-family: -apple-system, 'SF Pro Text', sans-serif; line-height: 1.65;
+}
+
+/* Tour button */
+.tour-btn {
+  display: inline-block; margin: 24px auto 0;
+  padding: 10px 24px; font-size: 12px; letter-spacing: 3px;
+  background: rgba(0, 50, 15, 0.6); color: var(--matrix-glow);
+  border: 1px solid var(--matrix); cursor: pointer;
+  text-shadow: 0 0 4px var(--matrix); transition: all 0.2s;
+  font-family: 'Courier New', monospace; text-transform: uppercase;
+}
+.tour-btn:hover {
+  background: rgba(0, 80, 25, 0.8); box-shadow: 0 0 12px var(--matrix);
+}
+.tour-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000;
+  display: none; align-items: center; justify-content: center; padding: 40px;
+}
+.tour-overlay.active { display: flex; }
+.tour-card {
+  max-width: 600px; padding: 40px;
+  background: var(--bg-cell); border: 2px solid var(--matrix);
+  box-shadow: 0 0 30px var(--matrix);
+}
+.tour-card h2 {
+  font-size: 18px; color: var(--matrix-glow); letter-spacing: 2px;
+  margin-bottom: 14px; text-shadow: 0 0 6px var(--matrix);
+}
+.tour-card p {
+  font-size: 13px; line-height: 1.6; color: #d0ffd6;
+  font-family: -apple-system, 'SF Pro Text', sans-serif;
+}
+.tour-progress {
+  margin-top: 20px; font-size: 10px; color: var(--matrix-dim);
+  letter-spacing: 2px;
+}
+
+/* Tiles */
+.section-h {
+  font-size: 11px; letter-spacing: 4px; color: var(--cyan);
+  text-shadow: 0 0 6px var(--cyan);
+  margin: 40px 0 16px; padding: 8px 0;
+  border-top: 1px solid var(--matrix-dim);
+  border-bottom: 1px dashed var(--matrix-dim);
+  text-align: center;
+}
+.tiles {
+  display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.tile {
+  background: var(--bg-cell); border: 1px solid var(--matrix-dim);
+  padding: 18px 20px; position: relative; overflow: hidden;
+  transition: all 0.2s;
+}
+.tile.spotlight {
+  border-color: var(--matrix); box-shadow: 0 0 18px var(--matrix);
+}
+.tile::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--matrix); box-shadow: 0 0 6px var(--matrix);
+}
+.tile.amber::before { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+.tile.cyan::before  { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan); }
+.tile h3 {
+  font-size: 14px; color: var(--matrix-glow); letter-spacing: 1.5px;
+  text-shadow: 0 0 5px var(--matrix); margin-bottom: 4px;
+}
+.tile .desc {
+  font-size: 11px; color: #b0d0b8; line-height: 1.5; margin-bottom: 14px;
+  font-family: -apple-system, 'SF Pro Text', sans-serif;
+}
+.tile .metric-row { display: flex; gap: 18px; flex-wrap: wrap; }
+.tile .metric { flex: 1; min-width: 90px; }
+.tile .metric .label {
+  font-size: 9px; color: var(--matrix-dim); letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.tile .metric .value {
+  font-size: 18px; color: var(--matrix-glow); font-weight: 700;
+  text-shadow: 0 0 5px var(--matrix); margin-top: 3px;
+}
+.tile .metric .value.amber { color: var(--amber); text-shadow: 0 0 5px var(--amber); }
+.tile .metric .value.cyan  { color: var(--cyan);  text-shadow: 0 0 5px var(--cyan); }
+.tile .badge {
+  display: inline-block; margin-top: 10px;
+  padding: 2px 10px; font-size: 9px; letter-spacing: 2px;
+  background: rgba(0, 80, 25, 0.6); color: var(--matrix-glow);
+  border: 1px solid var(--matrix-dim); text-transform: uppercase;
+}
+
+/* Methodology */
+.method-grid {
+  display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 14px;
+}
+.method-card {
+  background: var(--bg-cell); border: 1px solid var(--matrix-dim);
+  padding: 14px 16px;
+}
+.method-card h4 {
+  font-size: 11px; color: var(--cyan); letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.method-card p {
+  font-size: 11px; color: #b0d0b8; line-height: 1.55;
+  font-family: -apple-system, 'SF Pro Text', sans-serif;
+}
+
+footer {
+  margin-top: 50px; padding: 16px 0; text-align: center;
+  border-top: 1px dashed var(--matrix-dim);
+  font-size: 10px; color: var(--matrix-dim); letter-spacing: 2px;
+}
+footer a { color: var(--cyan); text-decoration: none; }
+
+.err { color: var(--red); padding: 14px; text-align: center; }
+.loading { color: var(--matrix-dim); padding: 24px; text-align: center; font-size: 11px; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<div class="container">
+  <div class="brand">
+    <span class="pulse"></span>
+    <span class="logo">SIGFORGE</span>
+    <span class="tag">// MULTI-STRATEGY VALIDATION FRAMEWORK</span>
+  </div>
+
+  <div class="hero">
+    <h1>Disciplined Strategy Validation for Polymarket</h1>
+    <p>Original prediction-market strategies under continuous A/B/C testing.
+       Risk-managed methodology, structured audit trails, infrastructure-first approach.
+       EU-based. Open-source plan post-validation.</p>
+    <button class="tour-btn" onclick="startTour()">▶ Start Tour</button>
+  </div>
+
+  <div class="section-h">▸ ORIGINAL STRATEGIES — LIVE PAPER VALIDATION</div>
+  <div class="tiles" id="strategies"><div class="loading">connecting…</div></div>
+
+  <div class="section-h">▸ INFRASTRUCTURE & METHODOLOGY</div>
+  <div class="method-grid">
+    <div class="method-card">
+      <h4>📊 LIVE DASHBOARD</h4>
+      <p>24/7 PnL tracking, win/loss attribution, position-level drill-down for every strategy.</p>
+    </div>
+    <div class="method-card">
+      <h4>🔬 A/B/C TESTING</h4>
+      <p>Multi-variant infrastructure runs hypotheses in parallel with isolated capital.
+         Each patch logged with hypothesis, expected outcome, rollback plan.</p>
+    </div>
+    <div class="method-card">
+      <h4>📚 KNOWLEDGE BASE</h4>
+      <p>27-note synthesis of Smart Money Concepts, Wyckoff, auction theory, risk management —
+         adapted for prediction-market microstructure.</p>
+    </div>
+    <div class="method-card">
+      <h4>📝 AUDIT TRAILS</h4>
+      <p>Every strategic decision documented. 200+ Obsidian notes auto-synced to AWS.
+         Full reproducibility for any past trade or patch.</p>
+    </div>
+    <div class="method-card">
+      <h4>🛠 BUILDER CODE READY</h4>
+      <p>Polymarket Builder Code obtained, integration mechanism designed.
+         All live deployments will attribute volume back to Polymarket.</p>
+    </div>
+    <div class="method-card">
+      <h4>🌍 OPEN-SOURCE PLAN</h4>
+      <p>Post-validation, our framework + strategy spec library will be released MIT-licensed
+         so retail can replicate disciplined approaches.</p>
+    </div>
+  </div>
+
+  <footer>
+    SigForge / Polymarket Builder · contact: riznykstepan@gmail.com<br>
+    <span style="color:var(--matrix-dim);">backend: AWS Lightsail Tokyo · infrastructure live since April 2026</span>
+  </footer>
+</div>
+
+<div class="tour-overlay" id="tour-overlay" onclick="if(event.target.id==='tour-overlay')endTour()">
+  <div class="tour-card">
+    <h2 id="tour-title"></h2>
+    <p id="tour-text"></p>
+    <div class="tour-progress" id="tour-prog"></div>
+    <button class="tour-btn" style="margin-top:18px;" onclick="nextTour()">▶ NEXT</button>
+    <button class="tour-btn" style="margin-top:18px; margin-left:8px;" onclick="endTour()">✕ CLOSE</button>
+  </div>
+</div>
+
+<script>
+const fmtUSD = v => '$' + (v ?? 0).toFixed(2);
+const fmtPct = v => v == null ? '—' : (v * 100).toFixed(1) + '%';
+
+// Strategy renderer — only OUR original strategies
+const STRATS = [
+  {
+    key: 'arb_paper',
+    name: 'BASKET',
+    desc: 'Multi-leg arbitrage. Buys all weather buckets when total ask < $1.00 — guaranteed payout. Math-backed risk-free.',
+    badge: 'CENTERPIECE',
+    color: 'cyan',
+  },
+  {
+    key: 'cointrick',
+    name: 'YIELD-FARM',
+    desc: 'Buys high-consensus markets at $0.99+ for guaranteed $1.00 resolution. Conservative scaling.',
+    color: '',
+  },
+  {
+    key: 'esports_copy',
+    name: 'COPY-TRADER',
+    desc: 'Mirrors verified e-sports specialist whales. Filters: position size, market end-date, exposure cap.',
+    color: '',
+  },
+  {
+    key: 'sport_paper',
+    name: 'SPORT YIELD',
+    desc: 'Yield-farm strategy on FIFA / sports markets at extreme-consensus prices.',
+    color: '',
+  },
+  {
+    key: 'poly_mm_paper',
+    name: 'MM PAPER',
+    desc: 'Maker-rebate market-making prototype. Earns spread + Polymarket maker rebates.',
+    color: '',
+  },
+];
+
+async function loadStrategies() {
+  try {
+    const r = await fetch('/api/showcase');
+    const d = await r.json();
+    const el = document.getElementById('strategies');
+    let html = '';
+    for (const s of STRATS) {
+      const m = d[s.key] || {};
+      const balance = m.balance ?? 0;
+      const startBal = m.starting_balance ?? m.initial_balance ?? 0;
+      const equity = balance + (m.spend_open ?? 0);
+      const pnl = equity - startBal;
+      const won = m.won ?? 0;
+      const lost = m.lost ?? 0;
+      const total = won + lost;
+      const wr = total > 0 ? (won / total) : null;
+      const open = m.open ?? 0;
+      const pnlClass = pnl >= 0 ? 'cyan' : 'amber';
+      const wrClass = wr != null && wr >= 0.7 ? 'cyan' : '';
+      html += `
+        <div class="tile ${s.color}" data-strat="${s.key}">
+          <h3>${s.name}</h3>
+          <div class="desc">${s.desc}</div>
+          <div class="metric-row">
+            <div class="metric">
+              <div class="label">PnL</div>
+              <div class="value ${pnlClass}">${pnl >= 0 ? '+' : ''}${fmtUSD(pnl)}</div>
+            </div>
+            <div class="metric">
+              <div class="label">Win Rate</div>
+              <div class="value ${wrClass}">${fmtPct(wr)}</div>
+            </div>
+            <div class="metric">
+              <div class="label">Closed</div>
+              <div class="value">${total}</div>
+            </div>
+            <div class="metric">
+              <div class="label">Open</div>
+              <div class="value">${open}</div>
+            </div>
+          </div>
+          ${s.badge ? `<div class="badge">⭐ ${s.badge}</div>` : ''}
+        </div>`;
+    }
+    el.innerHTML = html;
+  } catch (e) {
+    document.getElementById('strategies').innerHTML = '<div class="err">Failed to load metrics</div>';
+  }
+}
+loadStrategies();
+setInterval(loadStrategies, 30000);
+
+// === Tour Mode ===
+const TOUR = [
+  {
+    title: '🎯 SigForge in 60 seconds',
+    text: 'SigForge is a multi-strategy validation framework for Polymarket. We build original prediction-market strategies, validate them with paper capital, and document every decision. This tour walks you through what makes our approach different.',
+  },
+  {
+    title: '⭐ BASKET — math-guaranteed arbitrage',
+    text: 'Our centerpiece: a multi-leg arbitrage strategy. When the sum of all bucket asks for a weather event drops below $1.00, we buy every bucket. One bucket must resolve YES at $1.00 — the math guarantees profit. Current track record: 100% win rate on closed trades.',
+    spotlight: 'arb_paper',
+  },
+  {
+    title: '💰 YIELD-FARM — conservative consensus',
+    text: 'When markets show overwhelming consensus (Yes ≥$0.99 or No ≥$0.99), we take the safe side. Tiny per-trade profit, but high reliability. Currently scanning 100+ active markets every 5 minutes.',
+    spotlight: 'cointrick',
+  },
+  {
+    title: '🐋 COPY-TRADER — whale signal extraction',
+    text: 'We monitor verified specialist wallets and mirror their entries when filters pass: minimum position size, market end-date, exposure caps. Not blind copy — every trade goes through our risk gate.',
+    spotlight: 'esports_copy',
+  },
+  {
+    title: '🔬 A/B/C testing infrastructure',
+    text: 'We do not run one bot. We run multiple variants in parallel with isolated capital. Every patch is hypothesis-driven, with expected outcome and rollback plan. This is how we attribute PnL to specific design decisions.',
+  },
+  {
+    title: '📚 Trading Knowledge Base',
+    text: '27 notes synthesizing Smart Money Concepts, Wyckoff theory, auction microstructure, and risk management — adapted specifically for prediction-market dynamics. Public mirror planned post-validation.',
+  },
+  {
+    title: '🛠 Builder Code integration',
+    text: 'Polymarket Builder Code obtained. When we port strategies live (BASKET first — risk-free), every order auto-attributes volume back to Polymarket. Zero friction. Open-source plan after validation.',
+  },
+  {
+    title: '🤝 The ask',
+    text: 'We are applying for the Polymarket Builders Program. EU-based, working prototype, original strategies, disciplined methodology. Help us scale validated strategies live and open-source the framework for retail.',
+  },
+];
+
+let tourIdx = 0;
+function startTour() {
+  tourIdx = 0;
+  showTour();
+  document.getElementById('tour-overlay').classList.add('active');
+}
+function showTour() {
+  const t = TOUR[tourIdx];
+  document.getElementById('tour-title').textContent = t.title;
+  document.getElementById('tour-text').textContent = t.text;
+  document.getElementById('tour-prog').textContent = `STEP ${tourIdx + 1} / ${TOUR.length}`;
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('spotlight'));
+  if (t.spotlight) {
+    const tile = document.querySelector(`.tile[data-strat="${t.spotlight}"]`);
+    if (tile) tile.classList.add('spotlight');
+  }
+}
+function nextTour() {
+  tourIdx++;
+  if (tourIdx >= TOUR.length) endTour();
+  else showTour();
+}
+function endTour() {
+  document.getElementById('tour-overlay').classList.remove('active');
+  document.querySelectorAll('.tile').forEach(t => t.classList.remove('spotlight'));
+}
+
+// Auto-start tour if ?tour=1
+if (new URLSearchParams(location.search).get('tour') === '1') {
+  setTimeout(startTour, 800);
+}
+</script>
+</body>
+</html>

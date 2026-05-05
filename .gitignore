@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Data + state (NEVER commit live trading data)
+*.jsonl
+data/
+state/
+*.state.json
+
+# Secrets
+*.secret.*
+.env
+.env.*
+*.key
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Backup files
+*.bak
+*.bak.*
+*.orig

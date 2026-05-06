@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Showcase](https://img.shields.io/badge/showcase-live-00ff88.svg)](http://18.178.69.19/showcase.html)
 
+![SigForge showcase preview](frontend/showcase-preview.svg)
+
 > *Disciplined validation of original prediction-market strategies. Every
 > decision logged. Every claim backed by data. Open-source plan
 > post-validation.*

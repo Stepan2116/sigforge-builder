@@ -3,13 +3,23 @@
 > *What we will deliver with grant funding. Concrete milestones at 30/60/90
 > days. Continuous beyond that.*
 
-This roadmap is the answer to the question every grant reviewer asks: *"If
-we fund you with $25K, what specifically gets built?"*
+This roadmap is the answer to the question every grant reviewer asks:
+*"If we fund you, what specifically gets built?"*
+
+The plan is sized for **$10K lean execution** — sufficient because most of
+the infrastructure is already built (backtester, watchdog, methodology,
+strategy specs, live showcase — five weeks of self-funded work). The grant
+accelerates live deployment, not bootstraps from zero.
+
+A **stretch tier of $20-25K** (if available) accelerates BASKET capital
+scaling from $200 to $1,000 within the same 90-day window and supports
+community programming. The execution path is the same; only the live-trade
+step sizes change.
 
 Each milestone has:
 - **Output** — what is delivered.
 - **Verification** — how the reviewer (or anyone) can confirm completion.
-- **Funding allocation** — what portion of the grant supports it.
+- **Funding allocation (lean / stretch)** — split for $10K vs $25K tier.
 
 Estimates are conservative on purpose. Methodology overhead is a feature,
 not a bug — see [`METHODOLOGY.md`](METHODOLOGY.md).
@@ -52,14 +62,17 @@ This represents ~5 weeks of focused work. No grant funds expended.
 | 1.5 | Domain registered + SSL configured | https://sigforge.dev/ resolves |
 | 1.6 | GitHub Actions CI on backtester + tools | Green badge in README |
 
-### Funding allocation: ~$8K of $25K
+### Funding allocation
 
-- $50 initial live capital (BASKET).
-- $200 for sport-sniper live deployment after paper sample matures.
-- ~$3K developer time for V2 SDK migration + live integration testing.
-- $14 / year domain + SSL (negligible).
-- ~$1K AWS infrastructure (1 month at current scale + headroom).
-- ~$3K methodology refinement, audit reviews, dependency lockdown.
+| Item | Lean ($10K) | Stretch ($25K) |
+|---|---|---|
+| Initial BASKET live capital | $25 | $50 |
+| YIELD-FARM live capital | $25 | $50 |
+| Developer time (V2 SDK + live integration) | ~$2.5K | ~$3K |
+| Domain + SSL | $14 | $14 |
+| AWS infrastructure (3 months) | $200 | $400 |
+| Methodology + audit work | ~$1K | ~$2K |
+| **Subtotal phase 1** | **~$3.7K** | **~$5.5K** |
 
 ### Risk
 
@@ -85,14 +98,15 @@ in halving steps.
 | 2.5 | Per-strategy detail page on showcase | One-click drilldown from main dashboard |
 | 2.6 | First public blog post explaining BASKET edge | Linked from showcase + GitHub |
 
-### Funding allocation: ~$10K of $25K
+### Funding allocation
 
-- $1K-$3K cumulative live capital across strategies (still small, scaling
-  responsibly).
-- ~$5K developer time for live deployment of YIELD-FARM and SPORT-SNIPER,
-  per-strategy detail pages, blog content.
-- ~$2K for community engagement (X account active, Polymarket Discord,
-  user feedback iteration).
+| Item | Lean ($10K) | Stretch ($25K) |
+|---|---|---|
+| BASKET capital scaling (halving steps) | up to $200 | up to $1,000 |
+| SPORT-SNIPER live capital | $50 | $200 |
+| Developer time (deployment, detail pages, content) | ~$3K | ~$5K |
+| Community engagement (X, Discord, blog) | $500 | ~$2K |
+| **Subtotal phase 2** | **~$3.7K** | **~$8.2K** |
 
 ### Strategy gates that must pass before scaling
 
@@ -122,11 +136,16 @@ Onboard external contributors.
 | 3.5 | Documentation suite complete | All strategies + tools + methodology cross-linked |
 | 3.6 | Cumulative attributed volume > $X (TBD with Polymarket) | Polymarket Builder dashboard |
 
-### Funding allocation: ~$5K of $25K
+### Funding allocation
 
-- ~$3K developer time for new strategy development and community engagement.
-- ~$1K cumulative additional live capital.
-- ~$1K reserves / unforeseen.
+| Item | Lean ($10K) | Stretch ($25K) |
+|---|---|---|
+| New strategy development time | ~$1.5K | ~$3K |
+| Cumulative additional live capital | $300 | ~$1K |
+| Reserves / unforeseen | ~$800 | ~$2K |
+| **Subtotal phase 3** | **~$2.6K** | **~$6K** |
+| **Total across 90 days** | **~$10K** | **~$19.7K** |
+| Stretch reserve held | — | ~$5.3K (unallocated, performance-gated) |
 
 ### Reserve
 

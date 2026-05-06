@@ -37,14 +37,19 @@ Infrastructure (open-source):
 
 What makes us different from existing builders: methodology-first. Every strategic decision documented with hypothesis, expected impact, and rollback plan. Multi-variant testing runs hypotheses in parallel with isolated capital. The full repository is structured for reviewer-grade verification: visit the showcase URL, read the methodology doc, browse the strategy deep-dives, run the backtester yourself.
 
-What we'll do with grant funding:
-1. Port BASKET to live with Builder Code attribution — generate first attributed volume.
-2. V2 SDK migration across all bots for builder code support (current py-clob-client v0.34.6 lacks the field).
-3. Public domain + brand for cleaner external presence (currently demo on IP address).
-4. MIT-licensed release of validated strategies + replication docs + backtester + watchdog.
-5. Continuous strategy expansion (resolution-clock arb, sport vertical scaling, cross-platform monitoring).
+Funding ask: $10K range. Most of the infrastructure is already built — five weeks of self-funded work delivered the backtester, watchdog, methodology framework, strategy deep-dives, and live showcase. The grant accelerates live deployment with Builder Code attribution and the open-source release. We are deliberately frugal about capital, the same way we are deliberately conservative about strategy scaling: small starting size, growth only after validation gates pass.
 
-EU-based (Ukraine). Working prototype, infrastructure live since April 2026. Builder Code obtained.
+What we'll do with $10K (90-day plan):
+1. py-clob-client v2 SDK migration — unblocks Builder Code attribution on all bots.
+2. Port BASKET to live with Builder Code — generate first attributed transaction (~$25 starting capital, scaling in halving steps to ~$200 if Sharpe holds).
+3. YIELD-FARM and SPORT-SNIPER live with Builder Code — three strategies attributing volume by day-60.
+4. Public domain (sigforge.dev) + SSL — cleaner external presence vs current IP-address demo.
+5. MIT-licensed v1.0 release of validated strategies + backtester + watchdog so retail can replicate disciplined approaches.
+6. Public retrospective + first blog post explaining the BASKET edge.
+
+If awarded above $10K (e.g., $20-25K stretch tier if available), additional capital accelerates BASKET scaling from $200 to $1,000 within the same 90-day window and supports community engagement (X content, Polymarket Discord).
+
+EU-based (Ukraine). Working prototype, infrastructure live since April 2026. Builder Code obtained. Solo founder with public identity (verifiable via GitHub history).
 ```
 
 ## Website URL

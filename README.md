@@ -123,11 +123,18 @@ SigForge fixes all three.
 
 ## What grant funding will accelerate
 
+**Funding ask: $10K** — sized for lean 90-day execution. Most infrastructure
+is already built (5 weeks self-funded). The grant accelerates live
+deployment, not bootstraps from zero. Stretch tier of $25K (if available)
+accelerates BASKET capital scaling within the same window — see
+[`docs/ROADMAP.md`](docs/ROADMAP.md) for line-item breakdown.
+
 Listed in priority order:
 
 ### 1. Live deployment of validated strategies with Builder Code
 - BASKET first — math-guaranteed risk-free.
-- $50 starting live capital, scaling in halving steps once each step holds.
+- ~$25 starting live capital, scaling in halving steps to ~$200 once each
+  step holds (stretch tier scales to ~$1,000).
 - Every order tagged with `builderCode` field — attributed volume back to
   Polymarket from day 1.
 

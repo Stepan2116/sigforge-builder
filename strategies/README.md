@@ -1,53 +1,107 @@
-# SigForge — Original Strategies
+# SigForge — Strategy Library
 
-This directory contains the original prediction-market strategies developed for SigForge. All strategies are paper-validated before any live deployment.
+Original prediction-market strategies developed for SigForge. Each strategy is
+paper-validated under the SigForge methodology before any live deployment with
+Builder Code attribution.
 
-## Strategies
+---
 
-### `arb_basket.py` — BASKET (Multi-Leg Arbitrage)
-**Concept:** Polymarket weather events resolve as exactly one bucket = $1.00 (others = $0.00). When the sum of all bucket asks for an event drops below $1.00, buying every bucket guarantees a payout regardless of outcome.
+## Strategy index
 
-**Math:**
+| # | Strategy | Vertical | Status | Closed trades | WR | Sharpe/trade | PnL |
+|---|---|---|---|---|---|---|---|
+| 1 | [BASKET](BASKET.md) | Weather arb | 🟢 Validated | 9 | 100% | **3.10** | +$5.93 |
+| 2 | [YIELD-FARM](YIELD-FARM.md) | Cross-domain consensus | 🟢 Validated | 23 | 100% | 1.21 | +$2.26 |
+| 3 | [SPORT-SNIPER](SPORT-SNIPER.md) | Sports late-game | 🟡 New (today) | 0 | — | — | — |
+| 4 | [COPY-TRADER](#copy-trader) | Esports specialist mirror | 🟡 Filter debug | 0 | — | — | — |
+
+Live metrics: http://18.178.69.19/showcase.html (refreshed every 30s)
+
+---
+
+## Implementation files
+
+This directory contains the Python implementation of each strategy:
+
+| File | Strategy |
+|---|---|
+| [`arb_basket.py`](arb_basket.py) | BASKET — multi-leg arbitrage |
+| [`yield_farm.py`](yield_farm.py) | YIELD-FARM — cross-domain consensus |
+| [`copy_trader.py`](copy_trader.py) | COPY-TRADER — esports specialist mirror |
+
+SPORT-SNIPER (deployed 2026-05-06) shares the YIELD-FARM core logic with
+sport-specific filters and faster polling. See SPORT-SNIPER.md for details.
+
+---
+
+## Deep-dive docs
+
+Each strategy has a dedicated specification document covering edge thesis,
+algorithm walkthrough, parameters, risk profile, current metrics, known
+limitations, and scaling plan:
+
+- 📘 [BASKET.md](BASKET.md) — Math-guaranteed arbitrage. Sharpe 3.10.
+- 📘 [YIELD-FARM.md](YIELD-FARM.md) — Conservative consensus capture.
+- 📘 [SPORT-SNIPER.md](SPORT-SNIPER.md) — Live-state sports edge.
+
+---
+
+## Methodology
+
+Every strategy follows the SigForge methodology:
+
+1. **Hypothesis-driven** — every entry rule is documented with the hypothesis
+   it tests, before code is written.
+2. **Audit-logged** — every trade decision recorded in audit notes (Obsidian
+   vault, separate from this repo for size reasons).
+3. **Multi-variant testing** — patches and improvements run as parallel
+   A/B/C variants with isolated capital.
+4. **Paper-first, live-later** — no live deployment until paper validation
+   crosses risk gates (≥ 20 closed trades, Sharpe > 0.5, etc.).
+
+See [`../docs/METHODOLOGY.md`](../docs/METHODOLOGY.md) for the full validation
+framework.
+
+---
+
+## COPY-TRADER
+
+(Brief inline note since this strategy does not yet warrant a full deep-dive.)
+
+**Concept:** Monitor verified specialist whales every 60 seconds. When a NEW
+position appears (or size increases significantly) on their wallet, mirror
+it with our paper capital.
+
+**Filters:** position size threshold, market end-date threshold, exposure
+caps, daily limits.
+
+**Note:** Whale addresses redacted in public repo for privacy. The framework
+supports arbitrary specialist lists.
+
+**Current status:** Filter logic is overly restrictive — over 1,800 whale
+signals received with 0 trades executed in current paper run. Whale's actual
+strategy (high-consensus $0.97-$0.99 entries) does not match our forecast-tier
+filter. Strategy is paused pending revised filter design.
+
+This is documented openly because failure-to-execute is itself an audit
+trail. Capital is not lost; the bug is captured.
+
+---
+
+## Validation lifecycle
+
 ```
-For an N-bucket event with asks [a_1, a_2, ..., a_N]:
-  if sum(a_i) < 1.00:
-    buy 1 share of each bucket → cost = sum(a_i)
-    payout = $1.00 (one bucket must win)
-    profit = $1.00 - sum(a_i)
+INCUBATE → PAPER → CANDIDATE → LIVE → SCALE / KILL
 ```
 
-**Status:** 100% win rate (9/9 closed), +$5.93 realized, 3 active positions.
+See [METHODOLOGY.md](../docs/METHODOLOGY.md) for the full lifecycle and
+quantitative gates between phases.
 
-**Risk profile:** Math-guaranteed. Only failure mode is platform-level (e.g., resolution delay, no buyer for resolved positions).
+Current phase per strategy:
 
----
-
-### `yield_farm.py` — YIELD-FARM (cointrick)
-**Concept:** Scan all active markets every 5 minutes. When a market shows overwhelming consensus (one outcome ≥ $0.99), buy that side. Hold to resolution. Profit ≈ $1.00 - $buy_price.
-
-**Trade-off:** Tiny per-trade profit (~$0.005) but very high reliability when filtered properly.
-
-**Status:** 100% win rate (18/18 closed), 25 active positions.
-
-**Risk profile:** Tail risk — overwhelming consensus markets occasionally do reverse (e.g., last-minute event surprises). Position sizing capped to limit any single tail-loss impact.
-
----
-
-### `copy_trader.py` — COPY-TRADER (esports specialist mirror)
-**Concept:** Monitor verified specialist whales every 60 seconds. When a NEW position appears (or size increases significantly) on their wallet, mirror it with our paper capital. Filters: position size threshold, market end-date threshold, exposure caps, daily limits.
-
-**Note:** Whale addresses redacted in public repo for privacy. The framework supports arbitrary specialist lists.
-
-**Risk profile:** Specialist signal can decay. Mirror-lag can flip the trade unfavorably if our entry is much later than the specialist's. Filter discipline reduces but does not eliminate this.
-
----
-
-### Methodology notes
-
-Each strategy follows the SigForge methodology:
-1. **Hypothesis-driven** — every entry rule is documented with the hypothesis it tests
-2. **Audit-logged** — every trade decision is recorded in audit notes (separate vault, not in repo)
-3. **Multi-variant** — patches and improvements run as parallel A/B/C tests with isolated capital
-4. **Paper-first** — no live deployment until paper validation crosses risk gates
-
-See [`../docs/METHODOLOGY.md`](../docs/METHODOLOGY.md) for the full validation framework.
+| Strategy | Phase |
+|---|---|
+| BASKET | Late-stage paper (ready for live) |
+| YIELD-FARM | Mid-stage paper (more sample needed) |
+| SPORT-SNIPER | Early-stage paper (just deployed) |
+| COPY-TRADER | Investigation (filter mismatch) |

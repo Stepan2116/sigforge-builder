@@ -1,11 +1,18 @@
 # SigForge — Multi-Strategy Validation Framework for Polymarket
 
+[![CI](https://github.com/Stepan2116/sigforge-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/Stepan2116/sigforge-builder/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Showcase](https://img.shields.io/badge/showcase-live-00ff88.svg)](http://18.178.69.19/showcase.html)
+
 > *Disciplined validation of original prediction-market strategies. Every
 > decision logged. Every claim backed by data. Open-source plan
 > post-validation.*
 
 **Public showcase:** http://18.178.69.19/showcase.html
 **Tour mode:** http://18.178.69.19/showcase.html?tour=1 (10-step guided walkthrough)
+**Pitch deck:** [`application/pitch-deck.html`](application/pitch-deck.html) (5 slides, print-to-PDF)
+**Architecture:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) (Mermaid system diagram)
+**Roadmap:** [`docs/ROADMAP.md`](docs/ROADMAP.md) (30/60/90 day milestones)
 **Geography:** EU
 **Contact:** riznykstepan@gmail.com
 **Builder Code:** `0x6a386ecc3a926b109e131d736ab0053cb6bb6745638ddefa2693247db62d8ba1`
@@ -158,15 +165,21 @@ Listed in priority order:
 
 ```
 sigforge-builder/
+├── .github/workflows/
+│   └── ci.yml             GitHub Actions: pytest + lint, Python 3.10/3.11/3.12
 ├── application/           Grant submission materials
-│   └── form-fields.md
+│   ├── form-fields.md     Paste-ready submission text + verification cheatsheet
+│   └── pitch-deck.html    5-slide deck, print-to-PDF
 ├── docs/
-│   └── METHODOLOGY.md     Full validation framework (13 KB)
+│   ├── METHODOLOGY.md     Full validation framework (13 KB, 11 sections)
+│   ├── ARCHITECTURE.md    System diagram (Mermaid) + layer-by-layer description
+│   ├── ROADMAP.md         30/60/90 day milestones with grant fund allocation
+│   └── COMPARISON.md      Concrete differentiators vs typical retail Polymarket bots
 ├── frontend/              Public showcase dashboard
 │   ├── README.md
 │   └── showcase.html
 ├── strategies/            Trading strategy implementations + specs
-│   ├── README.md          Index + status
+│   ├── README.md          Index + status table
 │   ├── BASKET.md          Multi-leg arb deep-dive (Sharpe 3.10)
 │   ├── YIELD-FARM.md      Consensus capture deep-dive
 │   ├── SPORT-SNIPER.md    Live-state sports deep-dive
@@ -176,8 +189,10 @@ sigforge-builder/
 │   └── copy_trader.py
 ├── tools/                 Infrastructure (non-trading)
 │   ├── README.md
-│   ├── paper_watchdog.py  Process health monitor
+│   ├── paper_watchdog.py  Process health monitor (env-configurable)
 │   └── backtest.py        Strategy variant replay
+├── tests/                 Unit tests (23 cases, all passing)
+│   └── test_backtest.py
 ├── LICENSE                MIT
 └── README.md              (this file)
 ```

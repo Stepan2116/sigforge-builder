@@ -189,6 +189,38 @@ Configurable via env (`ANTHROPIC_MODEL`, `HTTP_TIMEOUT_SEC`,
 
 ---
 
+## `whale_discover.py` — find candidate wallets to mirror
+
+The weather-copy strategy currently mirrors a single wallet (coldmath).
+When coldmath stops opening forecast-tier positions, the strategy goes
+idle. This tool finds candidate wallets with forecast-tier weather
+positions across the top weather markets — output is a ranked list the
+operator reviews and then optionally adds to the strategy's `WHALES`
+dict.
+
+The tool is read-only. It never trades, never modifies state, never
+adds wallets to the strategy automatically. The human stays in the
+loop on every wallet promotion.
+
+**First production run:** 0 candidates with ≥1 forecast-tier weather
+position. This is consistent with the weather-copy diagnosis (data
+starvation, not a bug) — the forecast tier ($0.30-$0.65) on weather
+markets is currently inactive across all wallets on Polymarket. The
+tool returning 0 is itself a useful signal; we will rerun periodically
+to pick up the next active phase.
+
+Run:
+```
+python3 whale_discover.py                          # default scan
+python3 whale_discover.py --markets 100 --top-k 20 # wider scan
+python3 whale_discover.py --json                   # machine-readable
+```
+
+Configurable via env (`SF_GAMMA_URL`, `SF_DATA_URL`, `HTTP_TIMEOUT`)
+and CLI flags. See module docstring for the full list.
+
+---
+
 ## Why these are separate from `/strategies/`
 
 The `/strategies/` directory contains **trade-generating** code — bots that

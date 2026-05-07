@@ -31,10 +31,10 @@ this table from disk in under a second.
 |---|---|---|---|---|---|
 | **BASKET** (math arb) | Weather | 9 | **100.0%** | **3.10** | +$5.93 |
 | **YIELD-FARM** (cointrick) | Cross-domain | 23 | **100.0%** | 1.21 | +$2.26 |
-| **SPORT-SNIPER** (new today) | Sports late-game | 0 (7 open) | — | — | — |
+| **SPORT-SNIPER** | Sports moneyline | 20 | **100.0%** | 2.41 | +$11.28 |
 | **COPY-TRADER** | Esports specialist | 0 | — | — | — |
 
-**Aggregate (closed trades only):** 32 closed · 100% win rate · peak Sharpe 3.10.
+**Aggregate (closed trades only):** 52 closed · 100% win rate · peak Sharpe 3.10 · realized PnL +$19.47.
 
 The BASKET Sharpe of 3.10 is professional quant-fund grade. Sample is small
 (9 closed trades) but the edge is structural, not behavioral — see

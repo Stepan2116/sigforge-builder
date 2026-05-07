@@ -3,9 +3,9 @@
 > *Buy decisive-state live sport markets at $0.92+ and hold to resolution.
 > New vertical, deployed 2026-05-06.*
 
-**Status:** 🟡 Paper validation initial phase.
-**Sample:** 7 trades opened, 0 closed (deployed today).
-**Goal:** establish baseline metrics over first 50 closed trades.
+**Status:** 🟢 Paper validation — first cohort complete.
+**Sample:** 22 trades opened, 20 closed, 2 still open · 100% win rate · Sharpe 2.41 · realized PnL +$11.28 on $200 spend (ROI +5.64%).
+**Goal:** continue to 50 closed trades for variance confirmation; then promote to CANDIDATE phase.
 
 SPORT-SNIPER is the first non-weather strategy in the SigForge portfolio.
 It applies the YIELD-FARM logic (high-consensus capture) to live sport

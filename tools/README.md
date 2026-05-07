@@ -57,6 +57,35 @@ Adding a new strategy variant: define a function with signature
 
 ---
 
+## `sport_resolve_reconciler.py` — Sport-sniper position resolver
+
+Closes the operational loop for `SPORT-SNIPER` (and any moneyline-style
+strategy with the same state shape). The strategy bot only opens positions —
+without this reconciler, every trade stays "open" forever, blocking realized
+PnL accounting and capping `MAX_OPEN_USD` exposure as more games resolve.
+
+What it does each cycle (cron, hourly):
+- Read state file, find positions with `status="open"`.
+- For each, query Gamma `?id=<mid>&closed=true`. If the market is closed and
+  one outcome priced >=0.99, that outcome is the resolved winner.
+- Mark our position `won` (resolve_value = shares × $1) or `lost` ($0).
+- Update state file in-place; append immutable row to reconcile log.
+- Print summary: `won=+N lost=-M open=K err=E` plus all-time WR/PnL/ROI.
+
+**First production run (2026-05-07):** 20 of 22 open positions resolved.
+20 won, 0 lost, 100% WR, +$11.28 realized PnL on $200 spend (ROI +5.64%,
+Sharpe-per-trade 2.41). Two positions still open pending late-night games.
+
+Run manually:
+```
+python3 sport_resolve_reconciler.py
+```
+
+Configure via env (`SF_DATA_DIR`, `SF_STATE_FILE`, `SF_LOG_FILE`,
+`SF_GAMMA_URL`, `SF_HTTP_TIMEOUT`, `SF_USER_AGENT`) — see module docstring.
+
+---
+
 ## Why these are separate from `/strategies/`
 
 The `/strategies/` directory contains **trade-generating** code — bots that

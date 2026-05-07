@@ -55,12 +55,12 @@ This represents ~5 weeks of focused work. No grant funds expended.
 
 | # | Output | Verification |
 |---|---|---|
-| 1.1 | py-clob-client v2 SDK migration completed | Bot v2 deployment with new SDK; Builder Code field in every CLOB order |
-| 1.2 | BASKET ported to live with Builder Code | `builderCode = 0x6a386ecc...` in transaction logs |
-| 1.3 | First $50 live trade executed and resolved | Polymarket transaction hash, attributed volume visible |
+| 1.1 | TypeScript live-executor with Builder Code attribution | Node.js process submits CLOB orders; `builderCode` field present in serialized payload |
+| 1.2 | BASKET ported to live | `builderCode = 0x6a386ecc...` in transaction logs |
+| 1.3 | First $25 live trade executed and resolved | Polymarket transaction hash, attributed volume visible |
 | 1.4 | Live BASKET PnL within ±25% of paper extrapolation | Compared via `analyze_bots.py` over 30 days |
 | 1.5 | Domain registered + SSL configured | https://sigforge.dev/ resolves |
-| 1.6 | GitHub Actions CI on backtester + tools | Green badge in README |
+| 1.6 | GitHub Actions CI on backtester + tools | Green badge in README (already live as of this commit) |
 
 ### Funding allocation
 
@@ -68,7 +68,7 @@ This represents ~5 weeks of focused work. No grant funds expended.
 |---|---|---|
 | Initial BASKET live capital | $25 | $50 |
 | YIELD-FARM live capital | $25 | $50 |
-| Developer time (V2 SDK + live integration) | ~$2.5K | ~$3K |
+| Developer time (TS live-executor + integration) | ~$2.5K | ~$3K |
 | Domain + SSL | $14 | $14 |
 | AWS infrastructure (3 months) | $200 | $400 |
 | Methodology + audit work | ~$1K | ~$2K |
@@ -76,7 +76,7 @@ This represents ~5 weeks of focused work. No grant funds expended.
 
 ### Risk
 
-- V2 SDK has API differences vs v0.34.6. Migration may take longer than
+- @polymarket/clob-client (TypeScript) is the only SDK currently exposing the `builderCode` field; py-clob-client (Python) does not yet. Hybrid architecture is the deliberate workaround. Implementation may take longer than
   4 hours of focused work; we have buffer. Live trades not deployed until
   migration tested in isolation.
 
@@ -150,7 +150,7 @@ Onboard external contributors.
 ### Reserve
 
 ~$2K reserve held against:
-- Unexpected V2 SDK migration complications.
+- Unexpected complications in TS live-executor integration with the existing Python pipeline.
 - Adverse market regime requiring strategy rework.
 - Infrastructure scaling needs (additional AWS capacity).
 

@@ -40,7 +40,7 @@ What makes us different from existing builders: methodology-first. Every strateg
 Funding ask: $10K range. Most of the infrastructure is already built — five weeks of self-funded work delivered the backtester, watchdog, methodology framework, strategy deep-dives, and live showcase. The grant accelerates live deployment with Builder Code attribution and the open-source release. We are deliberately frugal about capital, the same way we are deliberately conservative about strategy scaling: small starting size, growth only after validation gates pass.
 
 What we'll do with $10K (90-day plan):
-1. py-clob-client v2 SDK migration — unblocks Builder Code attribution on all bots.
+1. TypeScript live-execution layer with Builder Code attribution. The Python paper bots stay authoritative for strategy logic; a thin Node.js executor (using @polymarket/clob-client — the SDK that currently supports the builderCode field) submits orders. Hybrid architecture preserves validation infrastructure while unblocking attribution.
 2. Port BASKET to live with Builder Code — generate first attributed transaction (~$25 starting capital, scaling in halving steps to ~$200 if Sharpe holds).
 3. YIELD-FARM and SPORT-SNIPER live with Builder Code — three strategies attributing volume by day-60.
 4. Public domain (sigforge.dev) + SSL — cleaner external presence vs current IP-address demo.

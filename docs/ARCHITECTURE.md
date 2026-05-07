@@ -202,6 +202,31 @@ The validation layer runs on demand, not on a hot path:
 
 ---
 
+## Platform adapter layer
+
+Every strategy in this repo reads markets, books, and resolution data
+through a thin adapter abstraction in
+[`strategies/adapters/`](../strategies/adapters/). The adapter normalizes
+each platform's REST quirks into the same `Market` / `Book` / `Order` /
+`OrderResult` dataclasses, so strategy code never depends on a specific
+platform's response shape.
+
+| Adapter | Read | Trade | Status |
+|---|---|---|---|
+| `polymarket` | Gamma API | via TS live-executor | production |
+| `manifold` | manifold.markets v0 | scaffold | read-only alpha |
+| `kalshi` | — | — | scaffold (US KYC required) |
+
+The adapter layer is what backs the "multi-platform support" claim in
+[`ROADMAP.md`](ROADMAP.md). Adding a new prediction-market protocol means
+subclassing `Platform`, implementing four methods, and registering the
+class in `REGISTRY` — no strategy-side changes required.
+
+See [`strategies/adapters/README.md`](../strategies/adapters/README.md)
+for the design rules and a worked example.
+
+---
+
 ## Hot vs cold paths
 
 The architecture deliberately separates two timing classes:

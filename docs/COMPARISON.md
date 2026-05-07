@@ -30,6 +30,9 @@ the most starred Polymarket bot repositories on GitHub as of May 2026
 | Methodology document | None | 13 KB document, 11 sections (`docs/METHODOLOGY.md`) |
 | Architecture document | None | Mermaid diagram + layer-by-layer description (`docs/ARCHITECTURE.md`) |
 | Comparable strategy specs | One paragraph in README | Per-strategy deep-dive (~7 KB each) covering edge thesis, algorithm, parameters, risk profile, scaling plan |
+| Multi-platform support | Hard-coded to one platform | Adapter layer (`strategies/adapters/`) — Polymarket prod, Manifold read-only, Kalshi scaffold |
+| Hypothesis-generation tooling | None | `tools/ai_hypothesis.py` — Claude-assisted hypothesis ranking with falsification tests |
+| Live execution layer | Mostly Python with `submit_order` and pray | Hybrid: Python decides, TypeScript executes with Builder Code, fill polling, leg-unwind on partial fills, heartbeat for watchdog |
 | Live dashboard | None or static screenshots | Real-time PnL with live mark-to-market, refreshed every 30s |
 | Failure post-mortems | None visible | Failed strategies (`cm-v1`, `cm-v6`, `cm-v8`) explicitly killed and documented |
 
@@ -49,6 +52,9 @@ Each row above is checkable. A reviewer who wants to verify any claim in 60 seco
 | Per-strategy deep-dives exist | Browse `strategies/BASKET.md`, `YIELD-FARM.md`, `SPORT-SNIPER.md` |
 | Failed strategies documented | This repo is intentionally focused on validated work; killed variants documented in vault audit notes referenced from `docs/METHODOLOGY.md` § 8.2 |
 | Architecture doc with diagram | `docs/ARCHITECTURE.md` — Mermaid renders natively on GitHub |
+| Adapter layer is real, not vapor | `strategies/adapters/` — three concrete adapters; `python -c "from adapters import adapter_for; m=list(adapter_for('manifold').fetch_markets(limit=3))"` returns live data |
+| Live executor handles partial-fill safety | `live-executor/live_basket.js` — `unwindFilledLegs()` reverses every confirmed leg if any later leg fails |
+| AI tooling is auditable | `tools/ai_hypothesis.py --dry-run trades.jsonl` prints exactly what Claude is asked, no API key required |
 
 ---
 

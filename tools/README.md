@@ -86,6 +86,37 @@ Configure via env (`SF_DATA_DIR`, `SF_STATE_FILE`, `SF_LOG_FILE`,
 
 ---
 
+## `ai_hypothesis.py` — hypothesis generation via Claude
+
+Reads a SigForge trades JSONL file, distills it to the fields most useful
+for hypothesis generation (win rate, ROI, price-band distribution, sample
+trades), and asks Claude to propose 3 candidate hypotheses ranked by
+falsifiability.
+
+**Why this exists:** The methodology (`docs/METHODOLOGY.md` section 1)
+requires every strategy or patch to start with a written hypothesis.
+Writing a hypothesis that survives backtesting is the hard part — most
+retail traders skip it entirely. This tool helps by listing alternatives
+the operator might not have considered, each tied to a concrete
+falsification test.
+
+The tool is intentionally an *idea generator*, not an *answer giver*. The
+output is a list of candidates; the operator picks one, runs the proposed
+falsification, and either kills it or promotes it through the validation
+gates. No hypothesis ships to live trading on the basis of a Claude
+response alone.
+
+Run:
+```
+ANTHROPIC_API_KEY=sk-ant-...  python3 ai_hypothesis.py path/to/trades.jsonl
+python3 ai_hypothesis.py --dry-run path/to/trades.jsonl  # preview prompt
+```
+
+Configurable via env (`ANTHROPIC_MODEL`, `HTTP_TIMEOUT_SEC`,
+`MAX_TRADES`). See module docstring for full list.
+
+---
+
 ## Why these are separate from `/strategies/`
 
 The `/strategies/` directory contains **trade-generating** code — bots that

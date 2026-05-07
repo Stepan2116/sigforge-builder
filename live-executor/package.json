@@ -5,6 +5,7 @@
   "type": "module",
   "main": "live_basket.js",
   "scripts": {
+    "derive": "node derive-api-key.js",
     "dryrun": "node live_basket.js --dry-run",
     "live": "node live_basket.js"
   },

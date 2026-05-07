@@ -100,13 +100,12 @@ The Polymarket CLOB requires three API credentials derived from the wallet
 private key. Run:
 
 ```bash
-node derive-api-key.js
+npm run derive
 ```
 
 The script signs a derivation request and prints the API key, secret,
 and passphrase. Paste them into `.env`.
 
-(Script not yet committed — TODO before first live run.)
 
 ### 4. Test in dry-run mode
 
@@ -148,7 +147,6 @@ npm run live
 
 ## What's not yet implemented (next iterations)
 
-- `derive-api-key.js` script for one-time credential derivation.
 - Leg-unwind logic when a basket partially fills.
 - Telegram alert on submission failure.
 - Per-leg fill confirmation polling.

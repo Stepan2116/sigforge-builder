@@ -196,4 +196,4 @@ LP refresh) and the arbitrage closes. As of May 2026 all three are present.
 
 - Methodology framework: [`../docs/METHODOLOGY.md`](../docs/METHODOLOGY.md)
 - Implementation: [`arb_basket.py`](arb_basket.py)
-- Live metrics: http://18.178.69.19/showcase.html
+- Live metrics: https://sigforge.dev/showcase.html

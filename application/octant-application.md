@@ -128,7 +128,7 @@ By end of epoch:
 ### Proof of work
 ```
 Repository: https://github.com/Stepan2116/sigforge-builder
-Live showcase: http://18.178.69.19/showcase.html?tour=1
+Live showcase: https://sigforge.dev/showcase.html?tour=1
 CI badge: green
 Builder Code (Polymarket): 0x6a386ecc...8ba1
 9+ commits in past 48 hours, all production-grade content.

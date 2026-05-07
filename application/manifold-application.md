@@ -116,7 +116,7 @@ bots can use."
 ### Proof of work
 ```
 GitHub: https://github.com/Stepan2116/sigforge-builder
-Live showcase: http://18.178.69.19/showcase.html?tour=1
+Live showcase: https://sigforge.dev/showcase.html?tour=1
 CI badge: green (23 unit tests, Python 3.10/3.11/3.12)
 Recent commits: 8+ public commits over the past 48 hours, all
 production-grade content (methodology, strategy specs, tools, tests).

@@ -132,7 +132,7 @@ What we did was build the infrastructure to act on it consistently.
 
 ```
 Live tracker (Sharpe, WR, drawdown, refreshed every 30s):
-http://18.178.69.19/showcase.html?tour=1
+https://sigforge.dev/showcase.html?tour=1
 
 Full repo (MIT-licensed methodology + tools):
 https://github.com/Stepan2116/sigforge-builder

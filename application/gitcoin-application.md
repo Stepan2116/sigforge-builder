@@ -99,7 +99,7 @@ whose capital is at stake.
 
 ## What I've already built (5 weeks self-funded)
 
-- Public live showcase: `http://18.178.69.19/showcase.html?tour=1`
+- Public live showcase: `https://sigforge.dev/showcase.html?tour=1`
 - GitHub repo: `https://github.com/Stepan2116/sigforge-builder`
 - 8+ commits in past 48 hours, all production-grade content
 - 23 unit tests passing, CI green

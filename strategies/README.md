@@ -15,7 +15,7 @@ Builder Code attribution.
 | 3 | [SPORT-SNIPER](SPORT-SNIPER.md) | Sports late-game | 🟡 New (today) | 0 | — | — | — |
 | 4 | [COPY-TRADER](#copy-trader) | Esports specialist mirror | 🟡 Filter debug | 0 | — | — | — |
 
-Live metrics: http://18.178.69.19/showcase.html (refreshed every 30s)
+Live metrics: https://sigforge.dev/showcase.html (refreshed every 30s)
 
 ---
 

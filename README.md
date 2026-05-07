@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Stepan2116/sigforge-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/Stepan2116/sigforge-builder/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Showcase](https://img.shields.io/badge/showcase-live-00ff88.svg)](http://18.178.69.19/showcase.html)
+[![Showcase](https://img.shields.io/badge/showcase-live-00ff88.svg)](https://sigforge.dev/showcase.html)
 [![Sponsor](https://img.shields.io/github/sponsors/Stepan2116?label=Sponsor&logo=github)](https://github.com/sponsors/Stepan2116)
 
 ![SigForge showcase preview](frontend/showcase-preview.svg)
@@ -11,8 +11,8 @@
 > decision logged. Every claim backed by data. Open-source plan
 > post-validation.*
 
-**Public showcase:** http://18.178.69.19/showcase.html
-**Tour mode:** http://18.178.69.19/showcase.html?tour=1 (10-step guided walkthrough)
+**Public showcase:** https://sigforge.dev/showcase.html
+**Tour mode:** https://sigforge.dev/showcase.html?tour=1 (10-step guided walkthrough)
 **Pitch deck:** [`application/pitch-deck.html`](application/pitch-deck.html) (5 slides, print-to-PDF)
 **Architecture:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) (Mermaid system diagram)
 **Roadmap:** [`docs/ROADMAP.md`](docs/ROADMAP.md) (30/60/90 day milestones)
@@ -144,8 +144,9 @@ Listed in priority order:
 - Migration to v2 unblocks live deployment for all current strategies.
 
 ### 3. Public domain + brand
-- IP-address dashboard demo is acceptable for grant review, not for public
-  launch. Domain registration + nginx config for cleaner external presence.
+- ✅ Public domain `sigforge.dev` live with Let's Encrypt SSL (HTTP/2,
+  HSTS, www → apex canonicalization). The IP fallback `http://18.178.69.19/`
+  is preserved for grant reviewers who were given the IP URL earlier.
 
 ### 4. Open-source release
 - MIT license on validated strategy library (BASKET, YIELD-FARM,
@@ -164,7 +165,7 @@ Listed in priority order:
 
 - **Backend:** AWS Lightsail Tokyo · 25+ pm2 processes · 24/7 since April 2026.
 - **Live paper bots:** 6 strategies + 4 archived/killed variants.
-- **Public showcase URL:** http://18.178.69.19/showcase.html (tour available).
+- **Public showcase URL:** https://sigforge.dev/showcase.html (tour available).
 - **Watchdog:** running, log-only mode (Telegram alerts can be enabled via env).
 - **Builder Code:** obtained, integration designed, awaiting V2 migration.
 - **Vault:** 200+ Obsidian notes auto-synced to AWS via cron.
@@ -223,7 +224,7 @@ This pitch is **honest about scope:**
 
 **To verify in 5 minutes:**
 
-1. Open http://18.178.69.19/showcase.html in incognito — no auth required.
+1. Open https://sigforge.dev/showcase.html in incognito — no auth required.
 2. Click "Start Guided Tour" — 10 steps explain everything.
 3. Browse `strategies/BASKET.md` for the Sharpe 3.10 thesis.
 4. Browse `docs/METHODOLOGY.md` section 3 for the validation gates.

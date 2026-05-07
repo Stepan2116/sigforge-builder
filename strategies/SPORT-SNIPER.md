@@ -190,4 +190,4 @@ isolation, and operate them in parallel with the rest of the portfolio.
 
 - Methodology framework: [`../docs/METHODOLOGY.md`](../docs/METHODOLOGY.md)
 - Implementation reference: [`yield_farm.py`](yield_farm.py) (cousin strategy)
-- Live metrics: http://18.178.69.19/showcase.html
+- Live metrics: https://sigforge.dev/showcase.html

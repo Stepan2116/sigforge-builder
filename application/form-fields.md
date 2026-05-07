@@ -17,7 +17,7 @@ SigForge
 ```
 SigForge is an open-source multi-strategy validation framework for Polymarket. We build original prediction-market strategies, validate them under disciplined methodology with paper capital, and publish the framework so retail traders can replicate proven approaches.
 
-Live demo: http://18.178.69.19/showcase.html?tour=1 (auto-starts 10-step guided tour)
+Live demo: https://sigforge.dev/showcase.html?tour=1 (auto-starts 10-step guided tour)
 
 Verified track record (live, paper-validated):
 - BASKET (multi-leg arbitrage on weather buckets) — math-guaranteed risk-free strategy. 100% win rate on 9 closed trades, Sharpe-per-trade 3.10 (professional quant-fund grade), +$5.93 realized.
@@ -43,7 +43,7 @@ What we'll do with $10K (90-day plan):
 1. TypeScript live-execution layer with Builder Code attribution. The Python paper bots stay authoritative for strategy logic; a thin Node.js executor (using @polymarket/clob-client — the SDK that currently supports the builderCode field) submits orders. Hybrid architecture preserves validation infrastructure while unblocking attribution.
 2. Port BASKET to live with Builder Code — generate first attributed transaction (~$25 starting capital, scaling in halving steps to ~$200 if Sharpe holds).
 3. YIELD-FARM and SPORT-SNIPER live with Builder Code — three strategies attributing volume by day-60.
-4. Public domain (sigforge.dev) + SSL — cleaner external presence vs current IP-address demo.
+4. Public domain `sigforge.dev` + SSL — DONE (live before submission). Stretch milestone is moving the domain into production-grade DNS (e.g. Cloudflare) for DDoS resistance.
 5. MIT-licensed v1.0 release of validated strategies + backtester + watchdog so retail can replicate disciplined approaches.
 6. Public retrospective + first blog post explaining the BASKET edge.
 
@@ -54,7 +54,7 @@ EU-based (Ukraine). Working prototype, infrastructure live since April 2026. Bui
 
 ## Website URL
 ```
-http://18.178.69.19/showcase.html
+https://sigforge.dev/showcase.html
 ```
 
 (Reviewer can append `?tour=1` to auto-start guided tour. 10 steps walking
@@ -105,7 +105,7 @@ post-application." Not strictly required per the form.
 
 Before clicking submit:
 - [ ] Project description pasted (above)
-- [ ] Website URL `http://18.178.69.19/showcase.html` verified to load in incognito (no auth required)
+- [ ] Website URL `https://sigforge.dev/showcase.html` verified to load in incognito (no auth required)
 - [ ] `?tour=1` auto-starts the 10-step tour
 - [ ] GitHub URL `https://github.com/Stepan2116/sigforge-builder` reachable
 - [ ] Most recent GitHub commit visible (active project signal)

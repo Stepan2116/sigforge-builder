@@ -337,7 +337,7 @@ process the default.
 - **Bot processes:** ~25 concurrent (strategies + variants + monitors + data
   feeds + watchdog).
 - **Knowledge base:** Obsidian vault auto-synced to AWS via cron.
-- **Public showcase:** http://18.178.69.19/showcase.html (live, 24/7).
+- **Public showcase:** https://sigforge.dev/showcase.html (live, 24/7).
 - **Builder Code:** `0x6a386ecc...8ba1` obtained, integration designed.
 
 For implementation detail see `strategies/` and `frontend/` directories.

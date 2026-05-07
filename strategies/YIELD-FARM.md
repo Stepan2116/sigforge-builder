@@ -184,4 +184,4 @@ linear-scalable up to liquidity caps.
 
 - Methodology framework: [`../docs/METHODOLOGY.md`](../docs/METHODOLOGY.md)
 - Implementation: [`yield_farm.py`](yield_farm.py)
-- Live metrics: http://18.178.69.19/showcase.html
+- Live metrics: https://sigforge.dev/showcase.html

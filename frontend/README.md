@@ -4,10 +4,10 @@ Public showcase dashboard for SigForge strategies.
 
 ## Live demo
 
-🌐 **http://18.178.69.19/showcase.html**
+🌐 **https://sigforge.dev/showcase.html**
 
 Append `?tour=1` to auto-start the 8-step guided tour:
-🌐 **http://18.178.69.19/showcase.html?tour=1**
+🌐 **https://sigforge.dev/showcase.html?tour=1**
 
 ## Architecture
 

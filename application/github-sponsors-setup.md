@@ -58,7 +58,7 @@ Your sponsorship funds:
 - Documentation and onboarding for first community contributors
 - AWS infrastructure costs (~$40/month)
 
-Live showcase: http://18.178.69.19/showcase.html?tour=1
+Live showcase: https://sigforge.dev/showcase.html?tour=1
 Repo: https://github.com/Stepan2116/sigforge-builder
 ```
 

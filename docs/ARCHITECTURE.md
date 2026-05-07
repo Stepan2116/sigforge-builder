@@ -194,7 +194,7 @@ The validation layer runs on demand, not on a hot path:
 - **`paper_watchdog.py`** — pm2 process scanning every 5 minutes.
   Detects: process down, restart loop, balance drained, state stale,
   HALT flag.
-- **Live showcase** — http://18.178.69.19/showcase.html. Real-time
+- **Live showcase** — https://sigforge.dev/showcase.html. Real-time
   Sharpe / win rate / drawdown / PnL per strategy.
 - **Audit notes** — 200+ Obsidian markdown files auto-synced to AWS
   via cron. Every strategic decision logged with hypothesis, expected

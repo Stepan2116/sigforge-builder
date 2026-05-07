@@ -6,6 +6,78 @@ backbone of the SigForge bot stack.
 
 ---
 
+## Tooling map
+
+```mermaid
+flowchart LR
+  subgraph STR["strategies/"]
+    direction TB
+    BB[BASKET]
+    YF[YIELD-FARM]
+    SS[SPORT-SNIPER]
+    CT[COPY-TRADER]
+  end
+
+  subgraph DATA["state files (data/)"]
+    direction TB
+    SBASKET[(BASKET state)]
+    SYIELD[(YIELD-FARM state)]
+    SSPORT[(SPORT-SNIPER state)]
+    SCOPY[(COPY-TRADER state)]
+  end
+
+  subgraph TOOLS["tools/ (this directory)"]
+    direction TB
+    WD[paper_watchdog.py<br/>process health monitor]
+    BT[backtest.py<br/>variant replay]
+    SR[sport_resolve_reconciler.py<br/>position resolver]
+    AI[ai_hypothesis.py<br/>Claude-assisted ideation]
+  end
+
+  subgraph EXEC["live-executor/"]
+    LB[live_basket.js<br/>Builder Code attribution]
+    HB[(heartbeat.json)]
+  end
+
+  subgraph EXT["external"]
+    PM[Polymarket Gamma + CLOB]
+    CL[Anthropic API]
+  end
+
+  BB --> SBASKET
+  YF --> SYIELD
+  SS --> SSPORT
+  CT --> SCOPY
+
+  WD -. monitors .-> SBASKET
+  WD -. monitors .-> SYIELD
+  WD -. monitors .-> SSPORT
+  WD -. monitors .-> SCOPY
+  WD -. monitors .-> HB
+
+  SR -- reconciles --> SSPORT
+  SR -- queries --> PM
+
+  BT -. replays .-> SBASKET
+  BT -. replays .-> SYIELD
+
+  AI -- reads --> SBASKET
+  AI -- reads --> SYIELD
+  AI -- reads --> SSPORT
+  AI -- calls --> CL
+
+  BB --> LB
+  LB -- Builder Code --> PM
+  LB --> HB
+```
+
+The dashed arrows are observation paths — tooling reads state but never
+writes it. Solid arrows are write paths (strategies and the live
+executor). This separation means tooling cannot accidentally corrupt
+strategy state, and a buggy tool is operationally safe to run.
+
+---
+
 ## `paper_watchdog.py` — Process health monitor
 
 Detects silent failures across the bot stack:

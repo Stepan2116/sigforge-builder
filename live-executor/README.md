@@ -84,14 +84,27 @@ npm install
 Create `.env` in this directory (chmod 600 — never commit):
 
 ```
+# required
 PRIVATE_KEY=0xYOUR_HEX_PRIVATE_KEY
 FUNDER_ADDRESS=0xYOUR_PROXY_WALLET_ADDRESS
 POLYMARKET_API_KEY=...        # see "Derive API creds" below
 POLYMARKET_SECRET=...
 POLYMARKET_PASSPHRASE=...
+
+# defaults — override only if you know why
 BUILDER_CODE=0x6a386ecc3a926b109e131d736ab0053cb6bb6745638ddefa2693247db62d8ba1
 CHAIN_ID=137
 HOST=https://clob.polymarket.com
+POLL_INTERVAL_MS=5000          # queue poll cadence
+FILL_TIMEOUT_MS=30000          # how long to wait for an order to fill before failing
+FILL_POLL_INTERVAL_MS=2000     # cadence for polling order status
+
+# optional alerts
+TELEGRAM_BOT_TOKEN=            # leave blank to disable
+TELEGRAM_CHAT_ID=
+
+# optional heartbeat (consumed by paper_watchdog.py)
+HEARTBEAT_PATH=                # default: data/heartbeat.json
 ```
 
 ### 3. Derive API creds (one-time)
@@ -145,15 +158,35 @@ npm run live
 
 ---
 
-## What's not yet implemented (next iterations)
+## Shipped
 
-- Leg-unwind logic when a basket partially fills.
-- Telegram alert on submission failure.
-- Per-leg fill confirmation polling.
-- Integration with `paper_watchdog.py` for liveness checks.
+- ✅ One-time API credential derivation (`derive-api-key.js`).
+- ✅ Per-leg fill confirmation polling — every order is polled to a
+  terminal status before the next leg is submitted, so the basket cannot
+  silently end up with un-confirmed fills.
+- ✅ Leg-unwind logic — if any leg fails, every already-filled leg is
+  reversed at the same price (best-effort exit). The signal is flagged
+  `.failed` only after unwinding completes.
+- ✅ Telegram alerts on rejected signals, halted baskets, and fatal
+  errors (opt-in via `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID`).
+- ✅ Heartbeat file at `HEARTBEAT_PATH` updated each poll; consumed by
+  `paper_watchdog.py` to detect a hung executor.
+- ✅ Graceful `SIGTERM` handling so pm2 restarts emit a clean shutdown
+  heartbeat.
 
-These are intentionally deferred until first paper-to-live signal is
-verified end-to-end with `--dry-run`.
+## What is intentionally deferred
+
+- **Smart-pricing on unwind.** Today unwind submits the opposite side at
+  the same price as the original leg — guaranteed to cross the book in a
+  liquid market, but suboptimal in thin late-resolve weather markets.
+  Production logic should walk the book to find a tighter exit. Deferred
+  until live trade volume justifies the complexity.
+- **Multi-signal concurrency.** Signals are processed strictly in order;
+  one slow basket blocks the queue. Acceptable while signal rate is
+  <1/min. Will revisit when concurrent baskets become the norm.
+- **Settlement-side accounting.** Realized PnL is computed by the Python
+  side from on-chain redemption events, not by the executor. Keeps the
+  separation of concerns clean.
 
 ---
 

@@ -3,6 +3,7 @@
 [![CI](https://github.com/Stepan2116/sigforge-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/Stepan2116/sigforge-builder/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Showcase](https://img.shields.io/badge/showcase-live-00ff88.svg)](http://18.178.69.19/showcase.html)
+[![Sponsor](https://img.shields.io/github/sponsors/Stepan2116?label=Sponsor&logo=github)](https://github.com/sponsors/Stepan2116)
 
 ![SigForge showcase preview](frontend/showcase-preview.svg)
 

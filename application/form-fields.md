@@ -3,7 +3,7 @@
 Submit at: https://builders.polymarket.com/
 
 All metrics below are verified live from production state files. Last
-refreshed: 2026-05-07. Showcase URL displays the same numbers updated
+refreshed: 2026-05-08. Showcase URL displays the same numbers updated
 every 30 seconds.
 
 ---
@@ -22,10 +22,10 @@ Live demo: https://sigforge.dev/showcase.html?tour=1 (auto-starts 10-step guided
 Verified track record (live, paper-validated):
 - BASKET (multi-leg arbitrage on weather buckets) — math-guaranteed risk-free strategy. 100% win rate on 9 closed trades, Sharpe-per-trade 3.10 (professional quant-fund grade), +$5.93 realized.
 - YIELD-FARM (cointrick) — high-consensus capture at $0.99+. 100% win rate on 23 closed trades, Sharpe 1.21, +$2.26 realized.
-- SPORT-SNIPER — live-state sport markets at $0.92+ during decisive game state. Deployed 2026-05-06, 7 active positions in MLB and esports.
+- SPORT-SNIPER — live-state sport markets at $0.92+ during decisive game state. Deployed 2026-05-06. 100% win rate on 20 closed trades, Sharpe 2.41, +$11.28 realized (ROI +5.64%).
 - COPY-TRADER (esports) — verified whale mirroring with risk filters.
 
-Aggregate: 32+ closed trades, 100% overall win rate, peak Sharpe 3.10. All trade logs and audit notes are independently verifiable.
+Aggregate: 52 closed trades, 100% overall win rate, peak Sharpe 3.10 (BASKET), realized PnL +$19.47. All trade logs and audit notes are independently verifiable.
 
 Infrastructure (open-source):
 - Live PnL dashboard with real-time Sharpe, win-rate, drawdown per strategy.
